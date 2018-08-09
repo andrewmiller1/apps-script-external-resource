@@ -146,11 +146,14 @@ resources_ = {};
 /**
  * A mimic of the available external resources
  */
-Object.defineProperty(this, 'resources', {
+
+Object.defineProperty(this, 'getResources_', {
   get: function() {
     return Object.freeze(Object.create(this.resources_));
   }
 });
+
+var resources = Object.create(getResources_);
 
 
 Object.defineProperty(this, 'eRunType_', {
@@ -166,19 +169,6 @@ Object.defineProperty(this, 'eRunType_', {
       }
     }));
   }
-});
-
-
-/*Object.defineProperty(this, 'RunType', {
-  value: 
-})*/
-
-
-Object.defineProperty(this, 'run', {
-  value: function(in_params) { return run_(in_params); }
-});
-Object.defineProperty(this.run, 'RunType', {
-  value: this.eRunType_
 });
 
 
@@ -337,12 +327,15 @@ function remove(name) {
  *   dateRangeRequired: false
  * }
  */
-function run_(resourceNameOrUrl) {
+function run(resourceNameOrUrl) {
   var url = resources_.hasOwnProperty(resourceNameOrUrl) ?
             resources_[resourceNameOrUrl] :
             resourceNameOrUrl;
   return eval(UrlFetchApp.fetch(url).getContentText());
 }
+Object.defineProperty(this.run, 'RunType', {
+  value: this.eRunType_
+});
 
 
 /**
@@ -352,6 +345,6 @@ function run_(resourceNameOrUrl) {
  */
 function load() {
   Object.keys(resources_).forEach(function(resources_loop_resource) {
-    this[resources_loop_resource] = run_(resources_[resources_loop_resource]);
+    this[resources_loop_resource] = run(resources_[resources_loop_resource]);
   });
 }
