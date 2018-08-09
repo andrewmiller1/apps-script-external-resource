@@ -1,2 +1,2 @@
 # apps-script-external-resource
-Run content from other resources on the web
+Allow scripts to run content from other resources on the web.
