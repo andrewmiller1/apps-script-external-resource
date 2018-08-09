@@ -129,6 +129,9 @@ domain.
 */
 
 
+'strict mode';
+
+
 /**
  * A link as a URL to content from other resources on the web
  * @typedef {string} ExternalResource
@@ -345,9 +348,10 @@ function run_(resourceNameOrUrl) {
 /**
  * Obtains and assigns source code to namespaces, for each respective,
  * available external resource
+ * @param {
  */
-function load(in_this) {
+function load() {
   Object.keys(resources_).forEach(function(resources_loop_resource) {
-    in_this[resources_loop_resource] = run_(resources_[resources_loop_resource]);
+    this[resources_loop_resource] = run_(resources_[resources_loop_resource]);
   });
 }
